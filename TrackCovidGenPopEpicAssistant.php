@@ -256,7 +256,7 @@ class TrackCovidGenPopEpicAssistant extends \ExternalModules\AbstractExternalMod
             case "1":
                 $ethnicity = "Hispanic/Latino";
                 break;
-            case "2":
+            case "0":
                 $ethnicity = "Non-Hispanic/Non-Latino";
                 break;
             default:
