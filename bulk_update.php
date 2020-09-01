@@ -1,5 +1,5 @@
 <?php
-namespace Stanford\TrackCovidGenPopEpicAssistant;
+namespace Stanford\TrackCovidBulkMrnExport;
 /** @var TrackCovidGenPopEpicAssistant $module */
 
 use \REDCap;

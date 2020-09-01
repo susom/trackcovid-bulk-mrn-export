@@ -73,6 +73,7 @@ class TrackCovidGenPopEpicAssistant extends \ExternalModules\AbstractExternalMod
             $address   = $this->parseAddr($r["addr"]);
             $lang      = $this->parseLang($r['confirm_language']);
             $ethnicity = $this->parseEthnicity($r);
+            $sex       = $this->parseSex($r);
 
             $update = [];
 
@@ -87,6 +88,10 @@ class TrackCovidGenPopEpicAssistant extends \ExternalModules\AbstractExternalMod
 
             // Update ethnicity
             if (empty($r['stanford_epic_ethnicity']) && !empty($ethnicity)) $update['stanford_epic_ethnicity'] = $ethnicity;
+
+            // Update ethnicity
+            if (empty($r['stanford_epic_sex']) && !empty($sex)) $update['stanford_epic_sex'] = $sex;
+
 
             if (!empty($update)) {
                 $update[REDCap::getRecordIdField()] = $r[REDCap::getRecordIdField()];
@@ -108,6 +113,21 @@ class TrackCovidGenPopEpicAssistant extends \ExternalModules\AbstractExternalMod
     }
 
 
+    public function parseSex($row) {
+        $saad = $row["saad"];
+        switch ($saad) {
+            case "1":
+                $sex = "M";
+                break;
+            case "2":
+                $sex = "F";
+                break;
+            default:
+                $sex = "U";
+                break;
+        }
+        return $sex;
+    }
 
     public function parseCsz($csz)
     {
