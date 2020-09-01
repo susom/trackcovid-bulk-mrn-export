@@ -1,9 +1,9 @@
 {
-	"name": "ClassNameHere",
+	"name": "TrackCOVID GenPop Epic Assistant",
 
-	"namespace": "Stanford\\ClassNameHere",
+	"namespace": "Stanford\\TrackCovidGenPopEpicAssistant",
 
-	"description": "A template for a REDCap External Module",
+	"description": "A tool to update reporting fields for bulk epic registration",
 
 	"documentation": "README.md",
 
@@ -16,16 +16,18 @@
 	],
 
 	"permissions": [
-		"redcap_module_system_enable",
-		"redcap_module_project_enable",
-		"redcap_module_save_configuration"
+        "redcap_save_record"
 	],
-	
-	"enable-every-page-hooks-on-system-pages": false,	
+
+	"enable-every-page-hooks-on-system-pages": false,
 
 	"links": {
 		"project": [
-
+            {
+				"name": "Prepare All Stanford EPIC data",
+				"icon": "report",
+				"url": "bulk_update"
+			}
 		],
 		"control-center": [
 
@@ -37,6 +39,12 @@
 	],
 
 	"project-settings": [
+		{
+			"key": "filter-logic",
+			"name": "<b>Filter Logic</b><br>Logical expression to select records that need bulk-mrn registration",
+			"required": false,
+			"type": "textarea"
+		},
 		{
 			"key": "enable-project-debug-logging",
 			"name": "<b>Enable Debug Logging</b><br><i>(optional)</i> Requires installation and configuration of emLogger",
