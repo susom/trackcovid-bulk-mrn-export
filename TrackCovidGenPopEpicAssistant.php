@@ -114,7 +114,7 @@ class TrackCovidGenPopEpicAssistant extends \ExternalModules\AbstractExternalMod
 
 
     public function parseSex($row) {
-        $saad = $row["saad"];
+        $saad = $row["saab"];
         switch ($saad) {
             case "1":
                 $sex = "M";
