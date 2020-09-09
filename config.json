@@ -46,6 +46,12 @@
 			"type": "textarea"
 		},
 		{
+			"key": "force-update",
+			"name": "<b>Force Update</b><br><i>(optional)</i> Push updated values into fields",
+			"required": false,
+			"type": "checkbox"
+		},
+		{
 			"key": "enable-project-debug-logging",
 			"name": "<b>Enable Debug Logging</b><br><i>(optional)</i> Requires installation and configuration of emLogger",
 			"required": false,

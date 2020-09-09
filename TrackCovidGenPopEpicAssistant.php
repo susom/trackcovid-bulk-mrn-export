@@ -39,7 +39,7 @@ class TrackCovidGenPopEpicAssistant extends \ExternalModules\AbstractExternalMod
         $q = $this->updateRecords($updates);
 
         if (!empty($q['errors'])) {
-            REDCap::logEvent("Error updateing in " . $this->getModuleName(), json_encode($updates),"",$record, $event_id);
+            REDCap::logEvent("Error updating in " . $this->getModuleName(), json_encode($updates),"",$record, $event_id);
         }
 
     }
@@ -67,6 +67,8 @@ class TrackCovidGenPopEpicAssistant extends \ExternalModules\AbstractExternalMod
 
         $updates = [];
 
+        $force = $this->getProjectSetting('force-update');
+
         foreach ($results as $r) {
 
             list($city, $state, $zip) = $this->parseCsz($r["csz"]);
@@ -78,19 +80,19 @@ class TrackCovidGenPopEpicAssistant extends \ExternalModules\AbstractExternalMod
             $update = [];
 
             // Update primary_city from CSZ
-            if (empty($r['primary_city']) && !empty($city)) $update['primary_city'] = $city;
+            if (( $force || empty($r['primary_city']))           && !empty($city)) $update['primary_city'] = $city;
 
             // Update State from CSZ
-            if (empty($r['primary_state']) && !empty($state)) $update['primary_state'] = $state;
+            if (( $force || empty($r['primary_state']))          && !empty($state)) $update['primary_state'] = $state;
 
             // Update language
-            if (empty($r['stanford_epic_lang']) && !empty($lang)) $update['stanford_epic_lang'] = $lang;
+            if (( $force || empty($r['stanford_epic_lang']))     && !empty($lang)) $update['stanford_epic_lang'] = $lang;
 
             // Update ethnicity
-            if (empty($r['stanford_epic_ethnicity']) && !empty($ethnicity)) $update['stanford_epic_ethnicity'] = $ethnicity;
+            if (( $force || empty($r['stanford_epic_ethnicity']) && !empty($ethnicity)) $update['stanford_epic_ethnicity'] = $ethnicity;
 
             // Update ethnicity
-            if (empty($r['stanford_epic_sex']) && !empty($sex)) $update['stanford_epic_sex'] = $sex;
+            if (( $force || empty($r['stanford_epic_sex']))      && !empty($sex)) $update['stanford_epic_sex'] = $sex;
 
 
             if (!empty($update)) {
