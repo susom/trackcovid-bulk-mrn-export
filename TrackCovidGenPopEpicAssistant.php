@@ -89,7 +89,7 @@ class TrackCovidGenPopEpicAssistant extends \ExternalModules\AbstractExternalMod
             if (( $force || empty($r['stanford_epic_lang']))     && !empty($lang)) $update['stanford_epic_lang'] = $lang;
 
             // Update ethnicity
-            if (( $force || empty($r['stanford_epic_ethnicity']) && !empty($ethnicity)) $update['stanford_epic_ethnicity'] = $ethnicity;
+            if (( $force || empty($r['stanford_epic_ethnicity']))&& !empty($ethnicity)) $update['stanford_epic_ethnicity'] = $ethnicity;
 
             // Update ethnicity
             if (( $force || empty($r['stanford_epic_sex']))      && !empty($sex)) $update['stanford_epic_sex'] = $sex;
