@@ -20,6 +20,23 @@ class TrackCovidGenPopEpicAssistant extends \ExternalModules\AbstractExternalMod
         // Other code to run when object is instantiated
     }
 
+    public function autoUpdateCron() {
+        $this->emDebug("Starting autoUpdate Cron");
+
+        foreach($this->framework->getProjectsWithModuleEnabled() as $localProjectId) {
+            $_GET['pid'] = $localProjectId;
+
+            $results = $this->getRecordData();
+            $this->emDebug("cron obtained " . count($results) . " records");
+
+            $updates = $this->parseRecords($results);
+            $this->emDebug("cron produced " . count($updates) . " updates");
+
+            $q = $this->updateRecords($updates);
+            $this->emDebug("cron save results", $q);
+        }
+    }
+
 
     public function redcap_save_record($project_id, $record, $instrument, $event_id, $group_id, $survey_hash = NULL, $response_id = NULL, $repeat_instance = 1) {
         $em_event_id = REDCap::getEventIdFromUniqueEvent($this::EM_EVENT_NAME);

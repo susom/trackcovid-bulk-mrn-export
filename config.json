@@ -7,6 +7,8 @@
 
 	"documentation": "README.md",
 
+    "framework-version": 4,
+
 	"authors": [
 		{
 			"name": "Andrew Martin",
@@ -68,6 +70,18 @@
 			"type": "checkbox"
 		}
 	],
+
+    "crons": [
+        {
+          "cron_name": "update",
+          "cron_description": "Update records for epic import every hour",
+          "method": "autoUpdateCron",
+          "cron_frequency": "3600",
+          "cron_max_run_time": "60"
+        }
+    ],
+
+
 
 	"compatibility": {
 		"php-version-min": "",
