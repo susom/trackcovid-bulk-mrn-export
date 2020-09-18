@@ -28,7 +28,7 @@
             {
 				"name": "Prepare All Stanford EPIC data",
 				"icon": "report",
-				"url": "bulk_update"
+				"url":  "bulk_update"
 			}
 		],
 		"control-center": [

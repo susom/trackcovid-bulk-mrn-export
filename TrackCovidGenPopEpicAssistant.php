@@ -23,24 +23,34 @@ class TrackCovidGenPopEpicAssistant extends \ExternalModules\AbstractExternalMod
     public function autoUpdateCron() {
         $this->emDebug("Starting autoUpdate Cron");
 
-        $enabledProjects = $this->framework->getProjectsWithModuleEnabled();
-
-        $this->emDebug($enabledProjects);
-
-        foreach($enabledProjects as $localProjectId) {
+        foreach($this->framework->getProjectsWithModuleEnabled() as $localProjectId) {
             $_GET['pid'] = $localProjectId;
-            $this->emDebug("Setting pid to $localProjectId");
+            $url = $this->getUrl("cron_update",true, false) . "&pid=" . $localProjectId;
 
-            $results = $this->getRecordData();
-            $this->emDebug("cron obtained " . count($results) . " records");
+            $this->emDebug("Setting pid to $localProjectId", $url);
 
-            $updates = $this->parseRecords($results);
-            $this->emDebug("cron produced " . count($updates) . " updates");
+            $client = new \GuzzleHttp\Client;
+            $resp = $client->reqest('GET', $url, [
+                \GuzzleHttp\RequestOptions::SYNCHRONOUS => true
+            ]);
 
-            $q = $this->updateRecords($updates);
-            $this->emDebug("cron save results", $q);
+            $this->emDebug($resp);
         }
     }
+
+    public function cronUpdate() {
+        $results = $this->getRecordData();
+        $this->emDebug("cron obtained " . count($results) . " records");
+
+        $updates = $this->parseRecords($results);
+        $this->emDebug("cron produced " . count($updates) . " updates");
+
+        $q = $this->updateRecords($updates);
+        $this->emDebug("cron save results", $q);
+
+        return $q;
+    }
+
 
 
     public function redcap_save_record($project_id, $record, $instrument, $event_id, $group_id, $survey_hash = NULL, $response_id = NULL, $repeat_instance = 1) {
