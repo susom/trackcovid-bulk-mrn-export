@@ -25,7 +25,7 @@ class TrackCovidGenPopEpicAssistant extends \ExternalModules\AbstractExternalMod
 
         foreach($this->framework->getProjectsWithModuleEnabled() as $localProjectId) {
             $_GET['pid'] = $localProjectId;
-            $this->emDebug('Setting pid to $localProjectId');
+            $this->emDebug("Setting pid to $localProjectId");
 
             $results = $this->getRecordData();
             $this->emDebug("cron obtained " . count($results) . " records");
@@ -66,6 +66,7 @@ class TrackCovidGenPopEpicAssistant extends \ExternalModules\AbstractExternalMod
 
     public function getRecordData($records = null) {
         $params = [
+            "project_id"    => $this->getProjectId(),
             "records"       => $records,
             "return_format" => "json",
             "events"        => [ "screening_arm_1" ],
@@ -127,7 +128,7 @@ class TrackCovidGenPopEpicAssistant extends \ExternalModules\AbstractExternalMod
 
     public function updateRecords($updates) {
         $this->emDebug('updates',$updates);
-        $q = REDCap::saveData('json', json_encode($updates));
+        $q = REDCap::saveData($this->getProjectId(), 'json', json_encode($updates));
         //$this->emDebug($q);
         return $q;
     }
