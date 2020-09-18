@@ -35,7 +35,7 @@ class TrackCovidGenPopEpicAssistant extends \ExternalModules\AbstractExternalMod
                 GuzzleHttp\RequestOptions::SYNCHRONOUS => true
             ]);
 
-            $this->emDebug($resp);
+            $this->emDebug("Response", $resp->getBody());
         }
     }
 
