@@ -23,7 +23,11 @@ class TrackCovidGenPopEpicAssistant extends \ExternalModules\AbstractExternalMod
     public function autoUpdateCron() {
         $this->emDebug("Starting autoUpdate Cron");
 
-        foreach($this->framework->getProjectsWithModuleEnabled() as $localProjectId) {
+        $enabledProjects = $this->framework->getProjectsWithModuleEnabled();
+
+        $this->emDebug($enabledProjects);
+
+        foreach($enabledProjects as $localProjectId) {
             $_GET['pid'] = $localProjectId;
             $this->emDebug("Setting pid to $localProjectId");
 
