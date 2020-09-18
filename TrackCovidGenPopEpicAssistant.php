@@ -5,6 +5,7 @@ namespace Stanford\TrackCovidGenPopEpicAssistant;
 require_once "emLoggerTrait.php";
 
 use \REDCap;
+use \GuzzleHttp;
 
 class TrackCovidGenPopEpicAssistant extends \ExternalModules\AbstractExternalModule
 {
@@ -25,13 +26,13 @@ class TrackCovidGenPopEpicAssistant extends \ExternalModules\AbstractExternalMod
 
         foreach($this->framework->getProjectsWithModuleEnabled() as $localProjectId) {
             $_GET['pid'] = $localProjectId;
-            $url = $this->getUrl("cron_update.php",true, false) . "&pid=" . $localProjectId;
+            $url = $this->getUrl("cron_update.php",true, false);
 
             $this->emDebug("Setting pid to $localProjectId", $url);
 
-            $client = new \GuzzleHttp\Client;
-            $resp = $client->reqest('GET', $url, [
-                \GuzzleHttp\RequestOptions::SYNCHRONOUS => true
+            $client = new GuzzleHttp\Client;
+            $resp = $client->request('GET', $url, [
+                GuzzleHttp\RequestOptions::SYNCHRONOUS => true
             ]);
 
             $this->emDebug($resp);
