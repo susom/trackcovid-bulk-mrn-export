@@ -73,8 +73,8 @@
 
     "crons": [
         {
-          "cron_name": "update",
-          "cron_description": "Update records for epic import every hour",
+          "cron_name": "genpop_mrn_report_update",
+          "cron_description": "Update records so they are ready for MRN report",
           "method": "autoUpdateCron",
           "cron_frequency": "3600",
           "cron_max_run_time": "60"

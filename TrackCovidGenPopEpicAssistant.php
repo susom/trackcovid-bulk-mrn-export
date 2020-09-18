@@ -25,6 +25,7 @@ class TrackCovidGenPopEpicAssistant extends \ExternalModules\AbstractExternalMod
 
         foreach($this->framework->getProjectsWithModuleEnabled() as $localProjectId) {
             $_GET['pid'] = $localProjectId;
+            $this->emDebug('Setting pid to $localProjectId');
 
             $results = $this->getRecordData();
             $this->emDebug("cron obtained " . count($results) . " records");
@@ -41,15 +42,15 @@ class TrackCovidGenPopEpicAssistant extends \ExternalModules\AbstractExternalMod
     public function redcap_save_record($project_id, $record, $instrument, $event_id, $group_id, $survey_hash = NULL, $response_id = NULL, $repeat_instance = 1) {
         $em_event_id = REDCap::getEventIdFromUniqueEvent($this::EM_EVENT_NAME);
 
-        $this->emDebug(".".$event_id.".", ".".$em_event_id.".");
+        // $this->emDebug(".".$event_id.".", ".".$em_event_id.".");
 
 
         if ($event_id != $em_event_id) {
             // This is the wrong event
-            $this->emDebug("Wrong Event");
+            // $this->emDebug("Wrong Event");
             return;
         }
-        $this->emDebug("Updating");
+        $this->emDebug("Updating $record");
 
         $records = $this->getRecordData(array($record));
         $updates = $this->parseRecords($records);
