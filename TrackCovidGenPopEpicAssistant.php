@@ -25,7 +25,7 @@ class TrackCovidGenPopEpicAssistant extends \ExternalModules\AbstractExternalMod
 
         foreach($this->framework->getProjectsWithModuleEnabled() as $localProjectId) {
             $_GET['pid'] = $localProjectId;
-            $url = $this->getUrl("cron_update",true, false) . "&pid=" . $localProjectId;
+            $url = $this->getUrl("cron_update.php",true, false) . "&pid=" . $localProjectId;
 
             $this->emDebug("Setting pid to $localProjectId", $url);
 

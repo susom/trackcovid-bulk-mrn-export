@@ -37,7 +37,7 @@
 	},
 
 	"no-auth-pages": [
-
+        "cron_update"
 	],
 
 	"project-settings": [
