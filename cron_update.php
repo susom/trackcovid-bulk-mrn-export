@@ -2,6 +2,6 @@
 namespace Stanford\TrackCovidGenPopEpicAssistant;
 /** @var TrackCovidGenPopEpicAssistant $module */
 
-$module->emDebug("This is cron_update");
+//$module->emDebug("This is cron_update");
 
-//echo $module->cron_update();
+echo $module->cron_update();
