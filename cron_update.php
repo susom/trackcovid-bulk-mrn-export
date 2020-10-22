@@ -4,4 +4,4 @@ namespace Stanford\TrackCovidGenPopEpicAssistant;
 
 //$module->emDebug("This is cron_update");
 
-echo $module->autoUpdateCron();
+echo $module->cronUpdate();
