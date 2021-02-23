@@ -55,10 +55,10 @@ class TrackCovidGenPopEpicAssistant extends \ExternalModules\AbstractExternalMod
 
 
     public function redcap_save_record($project_id, $record, $instrument, $event_id, $group_id, $survey_hash = NULL, $response_id = NULL, $repeat_instance = 1) {
+
         $em_event_id = REDCap::getEventIdFromUniqueEvent($this::EM_EVENT_NAME);
 
         // $this->emDebug(".".$event_id.".", ".".$em_event_id.".");
-
 
         if ($event_id != $em_event_id) {
             // This is the wrong event
@@ -68,13 +68,22 @@ class TrackCovidGenPopEpicAssistant extends \ExternalModules\AbstractExternalMod
         $this->emDebug("Updating $record");
 
         $records = $this->getRecordData(array($record));
+        $this->emDebug("Obtained " . count($records) . " records on query");
+
         $updates = $this->parseRecords($records);
-        $q = $this->updateRecords($updates);
+
+        if (count($updates) > 0) {
+            $q = $this->updateRecords($updates);
+            $this->emDebug("Updated $record: " . json_encode($q));
+        }  else {
+            $this->emDebug("No updates");
+        }
 
         if (!empty($q['errors'])) {
             REDCap::logEvent("Error updating in " . $this->getModuleName(), json_encode($updates),"",$record, $event_id);
         }
 
+        $this->emDebug("Done with saveRecord");
     }
 
 
@@ -82,6 +91,8 @@ class TrackCovidGenPopEpicAssistant extends \ExternalModules\AbstractExternalMod
     public function getRecordData($records = null) {
         $params = [
             "project_id"    => $this->getProjectId(),
+            "fields"        => [ "record_id", "csz", "addr", "confirm_language", "primary_city", "primary_state",
+                "stanford_epic_lang", "stanford_epic_ethnicity", "stanford_epic_sex", "saab", "latino_origin"],
             "records"       => $records,
             "return_format" => "json",
             "events"        => [ "screening_arm_1" ],
