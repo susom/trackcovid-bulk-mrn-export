@@ -40,6 +40,8 @@ class TrackCovidGenPopEpicAssistant extends \ExternalModules\AbstractExternalMod
     }
 
     public function cronUpdate() {
+        $this->emDebug("About to start cron update");
+
         $results = $this->getRecordData();
         $this->emDebug("cron obtained " . count($results) . " records");
 
@@ -99,7 +101,9 @@ class TrackCovidGenPopEpicAssistant extends \ExternalModules\AbstractExternalMod
         ];
 
         $q = REDCap::getData($params);
-        return json_decode($q,true);
+        $result = json_decode($q,true);
+        $this->emDebug("GetData found " . count($result) . " records");
+        return $result;
     }
 
 
