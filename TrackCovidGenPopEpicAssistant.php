@@ -157,9 +157,27 @@ class TrackCovidGenPopEpicAssistant extends \ExternalModules\AbstractExternalMod
 
 
     public function updateRecords($updates) {
+
+        $num_to_save = 50;
+
         $this->emDebug('updates',$updates);
-        $q = REDCap::saveData($this->getProjectId(), 'json', json_encode($updates));
-        //$this->emDebug($q);
+        $batch = array();
+        $nrecords = 0;
+        foreach($updates as $one_record) {
+            $nrecords++;
+            $batch[] = $one_record;
+            // Save in batches of 50
+            if (($nrecords % $num_to_save) == 0) {
+                $q = REDCap::saveData($this->getProjectId(), 'json', json_encode($batch));
+                $this->emDebug("Saving $num_to_save (total so far $nrecords) of " . count($updates) . " with save results: " . json_encode($q));
+                $batch = array();
+            }
+        }
+
+        // Save the last remaining records
+        $q = REDCap::saveData($this->getProjectId(), 'json', json_encode($batch));
+        $this->emDebug("Saved final batch of " . count($batch) . ": " . $q);
+
         return $q;
     }
 
